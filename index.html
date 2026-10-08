@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مكتبة فلسطين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #161616;
+    --white: #ffffff;
+    --sand: #f1ece2;
+    --olive: #2f6b3a;
+    --olive-soft: #e3eedf;
+    --red: #c8323c;
+    --muted: #6b665c;
+    --line: #ddd5c6;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: "IBM Plex Sans Arabic", Tahoma, Arial, sans-serif;
+    background: var(--sand);
+    color: var(--black);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* الرأس: خلفية سوداء وشريط تطريز */
+  header {
+    background: var(--black);
+    color: var(--white);
+    padding: 22px 24px 16px;
+  }
+  header h1 {
+    margin: 0;
+    font-family: "Reem Kufi", "IBM Plex Sans Arabic", sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  header p { margin: 6px 0 0; color: #cfc9bb; font-size: 1rem; }
+  .tatreez {
+    height: 14px;
+    background-color: var(--black);
+    background-repeat: repeat-x;
+    background-size: 14px 14px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cg fill='%23c8323c'%3E%3Crect x='12' y='0' width='4' height='4'/%3E%3Crect x='8' y='4' width='4' height='4'/%3E%3Crect x='16' y='4' width='4' height='4'/%3E%3Crect x='4' y='8' width='4' height='4'/%3E%3Crect x='20' y='8' width='4' height='4'/%3E%3Crect x='0' y='12' width='4' height='4'/%3E%3Crect x='24' y='12' width='4' height='4'/%3E%3Crect x='4' y='16' width='4' height='4'/%3E%3Crect x='20' y='16' width='4' height='4'/%3E%3Crect x='8' y='20' width='4' height='4'/%3E%3Crect x='16' y='20' width='4' height='4'/%3E%3Crect x='12' y='24' width='4' height='4'/%3E%3C/g%3E%3Crect x='12' y='12' width='4' height='4' fill='%232f7a3d'/%3E%3C/svg%3E");
+  }
+
+  .layout { flex: 1; display: flex; min-height: 0; }
+
+  aside {
+    width: 330px;
+    background: var(--white);
+    border-inline-end: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .search { padding: 12px; border-bottom: 1px solid var(--line); }
+  .search input {
+    width: 100%;
+    padding: 10px 12px;
+    font: inherit;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--sand);
+    color: var(--black);
+  }
+  .search input:focus { outline: 2px solid var(--olive); outline-offset: 1px; }
+  ul { list-style: none; margin: 0; padding: 6px; overflow-y: auto; flex: 1; }
+  li button {
+    width: 100%;
+    text-align: start;
+    font: inherit;
+    padding: 10px 12px;
+    margin-bottom: 2px;
+    background: none;
+    border: 0;
+    border-inline-start: 4px solid transparent;
+    border-radius: 2px;
+    color: var(--black);
+    cursor: pointer;
+    line-height: 1.5;
+  }
+  li button:hover { background: var(--sand); }
+  li button:focus-visible { outline: 2px solid var(--olive); }
+  li button[aria-current="true"] {
+    background: var(--olive-soft);
+    border-inline-start-color: var(--red);
+    color: var(--olive);
+    font-weight: 700;
+  }
+  .empty { padding: 16px; color: var(--muted); }
+
+  main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar h2 { margin: 0; font-size: 1.05rem; font-weight: 700; }
+  .bar a { color: var(--olive); font-weight: 500; text-decoration: none; white-space: nowrap; }
+  .bar a:hover { text-decoration: underline; }
+  .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    font: inherit;
+    font-weight: 500;
+    padding: 7px 14px;
+    border: 1px solid var(--olive);
+    border-radius: 4px;
+    background: var(--white);
+    color: var(--olive);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .btn:hover { background: var(--olive-soft); text-decoration: none; }
+  .btn:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+  .btn.primary { background: var(--olive); color: var(--white); }
+  .btn.primary:hover { background: #245530; }
+  body.wide aside { display: none; }
+  body.wide header { padding: 8px 16px 6px; }
+  body.wide header p { display: none; }
+  body.wide header h1 { font-size: 1.3rem; }
+  .viewer { flex: 1; position: relative; }
+  iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; }
+  .placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    color: var(--muted);
+    padding: 24px; text-align: center;
+  }
+  .placeholder svg { width: 96px; height: 96px; }
+  .placeholder p { margin: 0; font-family: "Reem Kufi", sans-serif; font-size: 1.3rem; }
+  [hidden] { display: none !important; }
+
+  @media (max-width: 760px) {
+    .layout { flex-direction: column; }
+    aside { width: 100%; height: 38%; border-inline-end: 0; border-bottom: 1px solid var(--line); }
+    header { padding: 16px 16px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>مكتبة فلسطين</h1>
+  <p>وثائق وملفات نحفظها ونشاركها</p>
+</header>
+<div class="tatreez" aria-hidden="true"></div>
+
+<div class="layout">
+  <aside>
+    <div class="search">
+      <input id="q" type="search" placeholder="ابحث عن ملف" aria-label="ابحث عن ملف">
+    </div>
+    <ul id="list"></ul>
+  </aside>
+
+  <main>
+    <div class="bar" id="bar" hidden>
+      <h2 id="title"></h2>
+      <div class="actions">
+        <button class="btn" id="wide" type="button">توسيع العرض</button>
+        <button class="btn" id="full" type="button">ملء الشاشة</button>
+        <a class="btn" id="open" target="_blank" rel="noopener">نافذة جديدة</a>
+        <a class="btn primary" id="dl" download>تحميل</a>
+      </div>
+    </div>
+    <div class="viewer">
+      <div class="placeholder" id="ph">
+        <!-- نجمة التطريز الثمانية -->
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <rect x="22" y="22" width="56" height="56" fill="#c8323c"/>
+          <rect x="22" y="22" width="56" height="56" fill="#c8323c" transform="rotate(45 50 50)"/>
+          <rect x="34" y="34" width="32" height="32" fill="#161616"/>
+          <rect x="34" y="34" width="32" height="32" fill="#161616" transform="rotate(45 50 50)"/>
+          <circle cx="50" cy="50" r="9" fill="#2f6b3a"/>
+        </svg>
+        <p>اختر ملفاً من القائمة لعرض محتواه</p>
+      </div>
+      <iframe id="frame" title="عارض الملف" hidden></iframe>
+    </div>
+  </main>
+</div>
+
+<script src="files.js"></script>
+<script>
+  // القائمة (FILES) جاية من ملف files.js اللي بيولّده build.py
+  const FOLDER = "pdfs/";
+
+  const list = document.getElementById("list");
+  const q = document.getElementById("q");
+  const frame = document.getElementById("frame");
+  const ph = document.getElementById("ph");
+  const bar = document.getElementById("bar");
+  const title = document.getElementById("title");
+  const open = document.getElementById("open");
+  const dl = document.getElementById("dl");
+  const wide = document.getElementById("wide");
+  const full = document.getElementById("full");
+  let current = null;
+
+  // توسيع العرض: إخفاء القائمة ليكبر العارض
+  wide.onclick = () => {
+    const on = document.body.classList.toggle("wide");
+    wide.textContent = on ? "إظهار القائمة" : "توسيع العرض";
+  };
+
+  // ملء الشاشة (Esc للخروج)
+  full.onclick = () => {
+    const el = document.querySelector(".viewer");
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (el.requestFullscreen) el.requestFullscreen();
+  };
+
+  function render() {
+    const term = q.value.trim();
+    const items = FILES.filter(f => f.name.includes(term));
+    list.innerHTML = "";
+    if (!items.length) {
+      list.innerHTML = '<li class="empty">ما في ملفات مطابقة</li>';
+      return;
+    }
+    items.forEach(f => {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.textContent = f.name;
+      if (f.file === current) b.setAttribute("aria-current", "true");
+      b.onclick = () => show(f.file);
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+  }
+
+  function show(file) {
+    const f = FILES.find(x => x.file === file);
+    if (!f) return;
+    current = file;
+    const url = FOLDER + encodeURIComponent(file);
+    frame.src = url;
+    frame.hidden = false;
+    ph.hidden = true;
+    bar.hidden = false;
+    title.textContent = f.name;
+    open.href = url;
+    dl.href = url;
+    dl.setAttribute("download", file);
+    history.replaceState(null, "", "#" + encodeURIComponent(file));
+    render();
+  }
+
+  q.addEventListener("input", render);
+  render();
+
+  if (location.hash) show(decodeURIComponent(location.hash.slice(1)));
+</script>
+</body>
+</html>
